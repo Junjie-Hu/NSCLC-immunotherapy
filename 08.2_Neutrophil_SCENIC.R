@@ -92,22 +92,6 @@ viewTable(topRegulators)
 saveRDS(scenicOptions, file=paste0(dir,"SCENIC/N_scenicOptions.Rds"))
 saveRDS(regulonActivity_byCellType_Scaled, file=paste0(dir,"SCENIC/N_regulonActivity_byCellType_Scaled.Rds"))
 
-## Projection the AUC and TF expression onto t-SNEs
-aucellApp <- plotTsne_AUCellApp(scenicOptions, exprMat)
-savedSelections <- shiny::runApp(aucellApp)
-print(tsneFileName(scenicOptions))
-tSNE_scenic <- readRDS(tsneFileName(scenicOptions))
-aucell_regulonAUC <- loadInt(scenicOptions, "aucell_regulonAUC")
-# Show TF expression:
-TF_check <- c("SPI1", "Sox10", "Sox9","Irf1", "Stat6")
-par(mfrow=c(2,3))
-AUCell::AUCell_plotTSNE(tSNE_scenic$Y, exprMat, aucell_regulonAUC[onlyNonDuplicatedExtended(rownames(aucell_regulonAUC))[TF_check],], plots="Expression")
-# Save AUC as PDF:
-Cairo::CairoPDF("output/Step4_BinaryRegulonActivity_tSNE_colByAUC.pdf", width=20, height=15)
-par(mfrow=c(4,6))
-AUCell::AUCell_plotTSNE(tSNE_scenic$Y, cellsAUC=aucell_regulonAUC, plots="AUC")
-dev.off()
-
 saveRDS(scenicOptions, file="SCENIC/N_scenicOptions.Rds") # To save status
 
 
