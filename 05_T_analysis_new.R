@@ -260,7 +260,7 @@ monocle_cds <- estimateDispersions(monocle_cds)
 clustering_DEG_genes <- differentialGeneTest(monocle_cds, fullModelFormulaStr = '~T_cluster_annotation', cores = 20)
 write.csv(clustering_DEG_genes,"data_out/T8_monocle_DEG.csv",quote=F)
 ordering_genes <- row.names (subset(clustering_DEG_genes, qval < 0.01))
-gene_id <- row.names(clustering_DEG_genes)[order(clustering_DEG_genes$qval)][1:500]
+gene_id <- row.names(clustering_DEG_genes)[order(clustering_DEG_genes$qval)][1:1000]
 ##
 monocle_cds <- setOrderingFilter(monocle_cds, gene_id)
 monocle_cds <- reduceDimension(
